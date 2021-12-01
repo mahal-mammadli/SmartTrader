@@ -8,11 +8,12 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
 
+from ByBit_MarketData import BTCUSD_MarketData
+
 style.use("dark_background") #"ggplot"
 
 f = Figure(figsize=(5,5), dpi=100)
 a = f.add_subplot(111)
-#a.plot([1,2,3,4,5,6,6],[1,23,53,6,45,34,5])
 
 def animate(i):
     pullData = open("BTCUSD_f.txt","r").read()
@@ -113,6 +114,13 @@ class PageTwo(tk.Frame):
         toolbar = NavigationToolbar2Tk(canvas, self)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        self.update_MarketData()
+
+    def update_MarketData(self):
+        BTCUSD_MarketData()
+        self.after(1000, self.update_MarketData)
+        
 
 
 if __name__ == "__main__":

@@ -4,12 +4,10 @@ from pybit import HTTP
 from matplotlib import pyplot as plt
 from datetime import date, datetime, timedelta
 
-# Python3 code to convert a tuple
-# into a string using str.join() method
-
 session = HTTP("https://api-testnet.bybit.com")
 
 def BTCUSD_MarketData():
+
 	def convertTuple(tup):
 		str = ','.join(tup)
 		return str
@@ -37,11 +35,3 @@ def BTCUSD_MarketData():
 	# Save with date and time
 	btcusd_timestamp = date_time, last_price
 	datetime_price_list = writeToFile('BTCUSD_dt.txt',btcusd_timestamp)
-
-for x in range(1000):
-	BTCUSD_MarketData()
-
-
-
-
-
