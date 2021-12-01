@@ -1,9 +1,32 @@
-try:
-    import tkinter as tk                # python 3
-    from tkinter import font as tkfont  # python 3
-except ImportError:
-    import Tkinter as tk     # python 2
-    import tkFont as tkfont  # python 2
+import tkinter as tk                # python 3
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.pyplot import fill
+from tkinter import font as tkfont  # python 3
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
+import matplotlib.animation as animation
+from matplotlib import style
+
+style.use("dark_background") #"ggplot"
+
+f = Figure(figsize=(5,5), dpi=100)
+a = f.add_subplot(111)
+#a.plot([1,2,3,4,5,6,6],[1,23,53,6,45,34,5])
+
+def animate(i):
+    pullData = open("BTCUSD_f.txt","r").read()
+    dataList = pullData.split('\n')
+    xList = []
+    yList = []
+    for eachLine in dataList:
+        if len(eachLine) > 1:
+            x,y = eachLine.split(',')
+            xList.append(float(x))
+            yList.append(float(y))
+    a.clear
+    a.plot(xList,yList)
+
 
 class SampleApp(tk.Tk):
 
@@ -77,13 +100,22 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=controller.title_font)
+        label = tk.Label(self, text="BTC USD Price", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 
 if __name__ == "__main__":
     app = SampleApp()
+    ani = animation.FuncAnimation(f, animate, interval=1000)
     app.mainloop()
