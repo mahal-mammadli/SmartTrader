@@ -8,12 +8,10 @@ root = tk.Tk()
 root.title('SmartTrader 1.0')
 root.iconbitmap('favicon.ico')
 
-def window():
-    tk.Toplevel()
-    
 
 class Application:
     def __init__(self, master):
+        tk.Tk.__init__(self, *args, **kwargs)
 
         #Start Frame
         myFrame = tk.Frame(master)
@@ -30,7 +28,7 @@ class Application:
         self.logo_label.grid(column=1,row=0)
         
         #Enter program button
-        self.button_enter = tk.Button(master, text="Start Program", command=lambda:[self.funcA(), self.funcB()])
+        self.button_enter = tk.Button(master, text="Start Program", command=lambda:[self.funcA()])
         self.button_enter.grid(column=1,row=1)
 
         #Exit program button
@@ -39,9 +37,13 @@ class Application:
 
     def funcA(self):
         window()
-    def funcB(self):
-        window()
-         
+
+def window():
+    tk.Toplevel()
+    canvas = tk.Canvas(root, width=600, height=300)
+    canvas.grid(columnspan=3,rowspan=3)
+
 # Run application
 app = Application(root)
+
 root.mainloop()
