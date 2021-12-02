@@ -35,7 +35,7 @@ class SampleApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
-        self.title("ProgTrader 1.0")
+        self.title("ProTrader 1.0")
         self.iconbitmap('favicon.ico')
 
         # the container is where we'll stack a bunch of frames
@@ -47,7 +47,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, PageOne, PageTwo, PageThree):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -91,9 +91,12 @@ class PageOne(tk.Frame):
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
         button1 = tk.Button(self, text="BTC USD Live Chart",
-                           command=lambda: controller.show_frame("PageTwo"))                     
+                           command=lambda: controller.show_frame("PageTwo"))
+        button2 = tk.Button(self, text="Trading Bot",
+                           command=lambda: controller.show_frame("PageThree"))                                        
         button.pack()
         button1.pack()
+        button2.pack()
 
 
 class PageTwo(tk.Frame):
@@ -121,7 +124,19 @@ class PageTwo(tk.Frame):
         BTCUSD_MarketData()
         self.after(1000, self.update_MarketData)
         
+class PageThree(tk.Frame):
 
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button1 = tk.Button(self, text='Run Simulation')
+                  
+        button.pack()
+        button1.pack()
 
 if __name__ == "__main__":
     app = SampleApp()
