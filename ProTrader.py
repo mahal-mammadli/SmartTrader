@@ -11,6 +11,7 @@ import matplotlib.animation as animation
 from matplotlib import style
 
 from ByBit_MarketData import BTCUSD_MarketData
+from Simulation import Simulation
 
 style.use("dark_background") #"ggplot"
 
@@ -151,8 +152,14 @@ class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        class wallet:
+            def __init__(self,total_btc,total_cash):
+                self.total_btc = total_btc
+                self.total_cash = total_cash
+
         def run_Simulation():
-            os.system('python Simulation.py')    
+            os.system('python Simulation.py')
+            my_wallet = Simulation()    
 
         self.controller = controller
         label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
