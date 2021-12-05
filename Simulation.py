@@ -61,30 +61,37 @@ print(my_wallet.total_btc)
 n = len(btc_hist_data[0])
 sell_x = 10
 
-buy_per_day = my_wallet.total_cash / n
+#buy_per_day = my_wallet.total_cash / n
 
 k = 0
 m = 2
 _list_array = np.zeros((m, n))
 
+buy_condition = TRUE
+
 list_of_transactions = []
 for i in range(0,n-1):
+    
     if (btc_price[i] == 'Low'):
         break
-
+    
     if float(btc_price[i]) > 0 :
         
-        #buy_per_day = my_wallet.total_cash / n
-        # buy list creation
-        buy_price = float(btc_price[k])
-        buy_quantity = buy_per_day / float(buy_price)
-        buy_list = open("Buy_List.txt",'a')
-        writeToList(buy_list,buy_price,buy_quantity)
-        _list_array[0][k] = buy_price
-        _list_array[1][k] = buy_quantity
+        if buy_condition == FALSE:
+            buy_condition = float(btc_price[i]) < last_sell_price*0.5
+        
+        if buy_condition ==  TRUE:
+            buy_per_day = my_wallet.total_cash / n
+            # buy list creation
+            buy_price = float(btc_price[k])
+            buy_quantity = buy_per_day / float(buy_price)
+            buy_list = open("Buy_List.txt",'a')
+            writeToList(buy_list,buy_price,buy_quantity)
+            _list_array[0][k] = buy_price
+            _list_array[1][k] = buy_quantity
 
-        my_wallet.total_btc = my_wallet.total_btc + buy_quantity
-        my_wallet.total_cash = my_wallet.total_cash - buy_quantity*buy_price
+            my_wallet.total_btc = my_wallet.total_btc + buy_quantity
+            my_wallet.total_cash = my_wallet.total_cash - buy_quantity*buy_price
 
         for j in range(0,k):
 
@@ -104,6 +111,8 @@ for i in range(0,n-1):
                 writeToList(sell_list,sell_price,sell_quantity)
                 _list_array[0][j] = 0
                 _list_array[1][j] = 0
+                #buy_condition = FALSE
+                last_sell_price = sell_price
                   
     k = k + 1
     wallet_total_list = open("Wallet_List.txt",'a')
