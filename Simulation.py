@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 from pybit import HTTP
 from tkinter import *
 
+
 class transaction:
     def __init__(self,n,price,amount,action):
         self.id = n
@@ -31,7 +32,7 @@ def writeToList(list,price,amount):
     list.write(str(price))
     list.write(" ")
     list.write(str(amount))
-    list.write('\n')      
+    list.write('\n') 
 
 # Open CSV file of BTC price history and convert to txt file
 with open("BitcoinHistoricalData.csv","r") as csv_file:
@@ -58,8 +59,9 @@ print ("Initial Wallet Value:")
 print(my_wallet.total_cash)
 print(my_wallet.total_btc)
 n = len(btc_hist_data[0])
-buy_per_day = total_cash / n
 sell_x = 10
+
+buy_per_day = my_wallet.total_cash / n
 
 k = 0
 m = 2
@@ -71,7 +73,8 @@ for i in range(0,n-1):
         break
 
     if float(btc_price[i]) > 0 :
-
+        
+        #buy_per_day = my_wallet.total_cash / n
         # buy list creation
         buy_price = float(btc_price[k])
         buy_quantity = buy_per_day / float(buy_price)
@@ -92,6 +95,7 @@ for i in range(0,n-1):
             if (sell_condition):
                 sell_price = float(btc_price[k])
                 sell_quantity = _list_array[1][j]
+                #sell_quantity = my_wallet.total_btc
                 
                 my_wallet.total_btc = my_wallet.total_btc - sell_quantity
                 my_wallet.total_cash = my_wallet.total_cash + sell_quantity*sell_price
@@ -102,16 +106,10 @@ for i in range(0,n-1):
                 _list_array[1][j] = 0
                   
     k = k + 1
+    wallet_total_list = open("Wallet_List.txt",'a')
+    wallet_total = my_wallet.total_cash + my_wallet.total_btc * float(btc_price[k])
+    writeToList(wallet_total_list,k,wallet_total)
 
-#root = Tk()
-#T = Text(root, height =2, width =30)
-#T.pack()
-#T.insert(END, "Final Wallet Value: \n" )
-#T.insert(END, my_wallet.total_cash)
-#T.insert(END,"\n")
-#T.insert(END, my_wallet.total_btc)
-#root.mainloop()
-
-#print("Final Wallet Value:")
-#print(my_wallet.total_cash)
-#print(my_wallet.total_btc)
+print("Final Wallet Value:")
+print(my_wallet.total_cash)
+print(my_wallet.total_btc)

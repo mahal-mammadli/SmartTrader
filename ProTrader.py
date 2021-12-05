@@ -17,6 +17,14 @@ style.use("dark_background") #"ggplot"
 f = Figure(figsize=(5,5), dpi=100)
 a = f.add_subplot(111)
 
+fig1 = Figure(figsize=(5,5), dpi=100)
+a1 = fig1.add_subplot(111)
+
+# Creates a new file
+with open('Wallet_List.txt', 'w') as fp:
+    pass
+
+
 def animate(i):
     pullData = open("BTCUSD_f.txt","r").read()
     dataList = pullData.split('\n')
@@ -30,9 +38,18 @@ def animate(i):
     a.clear
     a.plot(xList,yList)
 
-#def run_Simulation():
-#    os.system('Simulation.py')
-
+def animate2(i):
+    pullData = open("Wallet_List.txt","r").read()
+    dataList = pullData.split('\n')
+    xList = []
+    yList = []
+    for eachLine in dataList:
+        if len(eachLine) > 1:
+            x,y = eachLine.split(' ')
+            xList.append(float(x))
+            yList.append(float(y))
+    a1.clear
+    a1.plot(xList,yList)
 
 class SampleApp(tk.Tk):
 
@@ -135,7 +152,7 @@ class PageThree(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         def run_Simulation():
-            os.system('python Simulation.py')
+            os.system('python Simulation.py')    
 
         self.controller = controller
         label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
@@ -148,9 +165,18 @@ class PageThree(tk.Frame):
         button.pack()
         button1.pack()
 
+        canvas = FigureCanvasTkAgg(fig1, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)        
+
 
 
 if __name__ == "__main__":
     app = SampleApp()
     ani = animation.FuncAnimation(f, animate, interval=1000)
+    ani2 = animation.FuncAnimation(fig1, animate2, interval=1000)
     app.mainloop()
