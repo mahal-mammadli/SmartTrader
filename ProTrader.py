@@ -1,5 +1,7 @@
 import tkinter as tk                # python 3
 import matplotlib
+import sys
+import os
 matplotlib.use("TkAgg")
 from matplotlib.pyplot import fill
 from tkinter import font as tkfont  # python 3
@@ -27,6 +29,9 @@ def animate(i):
             yList.append(float(y))
     a.clear
     a.plot(xList,yList)
+
+#def run_Simulation():
+#    os.system('Simulation.py')
 
 
 class SampleApp(tk.Tk):
@@ -128,15 +133,22 @@ class PageThree(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
+        def run_Simulation():
+            os.system('python Simulation.py')
+
         self.controller = controller
         label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
-        button1 = tk.Button(self, text='Run Simulation')
-                  
+        button1 = tk.Button(self, text='Run Simulation', command=run_Simulation)
+
         button.pack()
         button1.pack()
+
+
 
 if __name__ == "__main__":
     app = SampleApp()

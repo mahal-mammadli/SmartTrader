@@ -7,6 +7,7 @@ from tkinter.constants import END, TRUE, Y
 import matplotlib
 from matplotlib import pyplot as plt
 from pybit import HTTP
+from tkinter import *
 
 class transaction:
     def __init__(self,n,price,amount,action):
@@ -16,16 +17,9 @@ class transaction:
         self.action = action
 
 class wallet:
-    def __init__(self,total_btc,total_cash,btc_price,transaction):
+    def __init__(self,total_btc,total_cash):
         self.total_btc = total_btc
         self.total_cash = total_cash
-
-        if (transaction.action == 'buy'):
-            self.total_btc = self.total_btc - transaction.amount
-        if (transaction.action == 'sell'):
-            self.total_btc = self.total_btc + transaction.amount
-
-        self.total_value = self.total_btc * btc_price + self.total_cash
 
         # conversion function    
 def convertTuple(tup):
@@ -59,9 +53,13 @@ btc_hist_data =  btc_date,btc_price # x- date, y - btc price
 
 # Case 1: buy everyday and sell only when x10
 total_cash = 1000000
+my_wallet = wallet(0,total_cash)
+print ("Initial Wallet Value:")
+print(my_wallet.total_cash)
+print(my_wallet.total_btc)
 n = len(btc_hist_data[0])
 buy_per_day = total_cash / n
-sell_x = 2
+sell_x = 10
 
 k = 0
 m = 2
@@ -69,6 +67,9 @@ _list_array = np.zeros((m, n))
 
 list_of_transactions = []
 for i in range(0,n-1):
+    if (btc_price[i] == 'Low'):
+        break
+
     if float(btc_price[i]) > 0 :
 
         # buy list creation
@@ -79,6 +80,9 @@ for i in range(0,n-1):
         _list_array[0][k] = buy_price
         _list_array[1][k] = buy_quantity
 
+        my_wallet.total_btc = my_wallet.total_btc + buy_quantity
+        my_wallet.total_cash = my_wallet.total_cash - buy_quantity*buy_price
+
         for j in range(0,k):
 
             bought_price = _list_array[0][j]
@@ -86,13 +90,28 @@ for i in range(0,n-1):
             sell_condition =  current_price >= bought_price*sell_x and bought_price > 0
 
             if (sell_condition):
-                sell_price = btc_price[k]
+                sell_price = float(btc_price[k])
                 sell_quantity = _list_array[1][j]
-                #print(sell_quantity)
+                
+                my_wallet.total_btc = my_wallet.total_btc - sell_quantity
+                my_wallet.total_cash = my_wallet.total_cash + sell_quantity*sell_price
                 
                 sell_list = open('Sell_List.txt','a')
                 writeToList(sell_list,sell_price,sell_quantity)
                 _list_array[0][j] = 0
                 _list_array[1][j] = 0
-                    
+                  
     k = k + 1
+
+#root = Tk()
+#T = Text(root, height =2, width =30)
+#T.pack()
+#T.insert(END, "Final Wallet Value: \n" )
+#T.insert(END, my_wallet.total_cash)
+#T.insert(END,"\n")
+#T.insert(END, my_wallet.total_btc)
+#root.mainloop()
+
+#print("Final Wallet Value:")
+#print(my_wallet.total_cash)
+#print(my_wallet.total_btc)
