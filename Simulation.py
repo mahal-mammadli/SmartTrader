@@ -39,10 +39,7 @@ def Simulation():
         list.write(str(price))
         list.write(" ")
         list.write(str(amount))
-        list.write('\n') 
-
-
-        
+        list.write('\n')     
 
     btc_date = []
     btc_price = []
@@ -61,8 +58,12 @@ def Simulation():
     print(my_wallet.total_cash)
     print(my_wallet.total_btc)
     n = len(btc_hist_data[0])
-    sell_x = 10
 
+    for line in open('Sell_x_value_input.txt','r'):
+        if line == 'Low':
+            break
+        sell_x = float(line)
+        
     #buy_per_day = my_wallet.total_cash / n
 
     k = 0
@@ -118,10 +119,15 @@ def Simulation():
                     
         k = k + 1
         wallet_total_list = open("Wallet_List.txt",'a')
-        wallet_total = my_wallet.total_cash + my_wallet.total_btc * float(btc_price[k])
+        
+        last_btc_price = float(btc_price[k-1])
+        if (btc_price[i] == 'Low'):
+            break
+
+        wallet_total = my_wallet.total_cash + my_wallet.total_btc * last_btc_price
         writeToList(wallet_total_list,k,wallet_total)
 
-    print("Final Wallet Value:")
+    #print("Final Wallet Value:")
     print(my_wallet.total_cash)
     print(my_wallet.total_btc)
     return my_wallet

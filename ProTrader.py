@@ -1,10 +1,13 @@
+import csv
 import tkinter as tk                # python 3
 import matplotlib
 import sys
 import os
+import os.path
+
 matplotlib.use("TkAgg")
 from matplotlib.pyplot import fill
-from tkinter import font as tkfont  # python 3
+from tkinter import Entry, font as tkfont  # python 3
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
@@ -12,6 +15,7 @@ from matplotlib import style
 
 from ByBit_MarketData import BTCUSD_MarketData
 from Simulation import Simulation
+from drop_menu import drop_menu
 
 style.use("dark_background") #"ggplot"
 
@@ -24,7 +28,6 @@ a1 = fig1.add_subplot(111)
 # Creates a new file
 with open('Wallet_List.txt', 'w') as fp:
     pass
-
 
 def animate(i):
     pullData = open("BTCUSD_f.txt","r").read()
@@ -70,7 +73,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -91,6 +94,20 @@ class SampleApp(tk.Tk):
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
+
+        def exit():
+            #if (os.path.isfile("BitcoinHistoricalData.txt")):
+                #os.remove("BitcoinHistoricalData.txt")
+            if (os.path.isfile("Buy_List.txt")):
+                os.remove("Buy_List.txt")    
+            if (os.path.isfile("Sell_List.txt")):
+                os.remove("Sell_List.txt")
+            if (os.path.isfile("Sell_x_value_input.txt")):
+                os.remove("Sell_x_value_input.txt")
+            if (os.path.isfile("Wallet_List.txt")):
+                os.remove("Wallet_List.txt")
+            self.quit()
+
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="Pro Trader 1.0", font=controller.title_font)
@@ -99,7 +116,7 @@ class StartPage(tk.Frame):
         button1 = tk.Button(self, text="Start",
                             command=lambda: controller.show_frame("PageOne"))
         button2 = tk.Button(self, text="Exit",
-                            command=lambda: controller.quit())
+                            command=exit)
         button1.pack()
         button2.pack()
 
@@ -115,11 +132,14 @@ class PageOne(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button1 = tk.Button(self, text="BTC USD Live Chart",
                            command=lambda: controller.show_frame("PageTwo"))
-        button2 = tk.Button(self, text="Trading Bot",
-                           command=lambda: controller.show_frame("PageThree"))                                        
+        button2 = tk.Button(self, text="Trading Bot Simulator",
+                           command=lambda: controller.show_frame("PageThree")) 
+        button3 = tk.Button(self,text="Trading Bot",
+                           command=lambda: controller.show_frame("PageFour"))                                      
         button.pack()
         button1.pack()
         button2.pack()
+        button3.pack()
 
 
 class PageTwo(tk.Frame):
@@ -157,6 +177,12 @@ class PageThree(tk.Frame):
                 self.total_btc = total_btc
                 self.total_cash = total_cash
 
+        def enter_click(event):
+            x=float(x_entry.get())
+            list = open("Sell_x_value_input.txt",'a')
+            list.write(str(x))
+            list.write('\n')
+
         def run_Simulation():
             os.system('python Simulation.py')
             my_wallet = Simulation()    
@@ -164,6 +190,16 @@ class PageThree(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+        
+        label = tk.Label(self, text="Enter sell x value:")
+        label.pack()
+        x_entry = Entry(self)
+        x_entry.pack()
+        enter_button = tk.Button(self, text="Enter")
+        enter_button.pack()
+        enter_button.bind("<Button-1>", enter_click)
+        enter_button.bind("<Return>", enter_click)
+        
 
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
@@ -180,6 +216,14 @@ class PageThree(tk.Frame):
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)        
 
+class PageFour(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="ProTrader Bot 1.0", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        drop_menu(self)
 
 
 if __name__ == "__main__":
@@ -187,3 +231,4 @@ if __name__ == "__main__":
     ani = animation.FuncAnimation(f, animate, interval=1000)
     ani2 = animation.FuncAnimation(fig1, animate2, interval=1000)
     app.mainloop()
+

@@ -18,9 +18,9 @@ def BTCUSD_MarketData():
 		list.write('\n')
 		return list
 
-	print(session.server_time())  
-	print(session.latest_information_for_symbol(
-		symbol="BTCUSD"	))
+	#print(session.server_time())  
+	#print(session.latest_information_for_symbol(
+	#	symbol="BTCUSD"	))
 
 	BTCUSD = session.latest_information_for_symbol(symbol="BTCUSD") #returns dictionary
 	DATA = BTCUSD['result']

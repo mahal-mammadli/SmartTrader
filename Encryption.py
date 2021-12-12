@@ -124,9 +124,9 @@ def create(api_key, secret_key, side, order_type, qty, price):
 
 
 def main():
-    api_key = "vvO4vBTwmm36bb4L7t"
-    secret_key = "P8ctndKad4TdO6yvpuoji6na9szTjl2mI1Al"
-    create(api_key, secret_key, "Buy", "Limit", 1, 8700)
+    api_key = "X9X7MLKGD97ZLruuRF"
+    secret_key = "KkN0QIDirAOT8ISQEALtW95JUVPRPzPqsBlj"
+    create(api_key, secret_key, "Buy", "Limit", 1, 48820)
 
 
 if __name__ == "__main__":
