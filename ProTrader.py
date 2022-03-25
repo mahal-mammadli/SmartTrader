@@ -55,6 +55,19 @@ def animate2(i):
     a1.clear
     a1.plot(xList,yList)
 
+def animate3(i):
+    pullData = open("BTCUSD_CoinBase.txt","r").read()
+    dataList = pullData.split('\n')
+    xList = []
+    yList = []
+    for eachLine in dataList:
+        if len(eachLine) > 1:
+            x,y = eachLine.split(' ')
+            xList.append(float(x))
+            yList.append(float(y))
+    a1.clear
+    a1.plot(xList,yList)    
+
 class SampleApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -223,6 +236,14 @@ class PageFour(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="ProTrader Bot 1.0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()        
+
+        canvas = FigureCanvasTkAgg(fig1, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
         drop_menu(self)
 
 
