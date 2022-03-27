@@ -6,15 +6,17 @@ import os
 import os.path
 
 matplotlib.use("TkAgg")
-from matplotlib.pyplot import fill
+from matplotlib.pyplot import fill, plot
 from tkinter import Entry, font as tkfont  # python 3
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
+import matplotlib.pyplot as plt
 
 from ByBit_MarketData import BTCUSD_MarketData
 from Simulation import Simulation
+from Simulation2 import Simulation2
 from drop_menu import drop_menu
 
 style.use("dark_background") #"ggplot"
@@ -24,6 +26,9 @@ a = f.add_subplot(111)
 
 fig1 = Figure(figsize=(5,5), dpi=100)
 a1 = fig1.add_subplot(111)
+
+fig4 = Figure(figsize=(5,5), dpi=100)
+a4 = fig4.add_subplot(111)
 
 # Creates a new file
 with open('Wallet_List.txt', 'w') as fp:
@@ -66,7 +71,20 @@ def animate3(i):
             xList.append(float(x))
             yList.append(float(y))
     a1.clear
-    a1.plot(xList,yList)    
+    a1.plot(xList,yList)
+    
+def animate4(i):
+    pullData = open("MA_minutes_2021.txt","r").read()
+    dataList = pullData.split('\n')
+    xList = []
+    yList = []
+    for eachLine in dataList:
+        if len(eachLine) > 1:
+            x,y = eachLine.split(' ')
+            xList.append(float(x))
+            yList.append(float(y))
+    a4.clear
+    a4.plot(xList,yList)        
 
 class SampleApp(tk.Tk):
 
@@ -198,8 +216,17 @@ class PageThree(tk.Frame):
 
         def run_Simulation():
             os.system('python Simulation.py')
-            my_wallet = Simulation()    
-
+            my_wallet = Simulation()
+            
+        def run_Simulation2():
+            os.system('python Simulation2.py')
+            my_wallet, moving_averages, iteration_ma = Simulation2()
+            plt.plot(iteration_ma,moving_averages)
+            plt.title('One lines on a graph!')
+            plt.legend()
+            plt.show()
+            
+            
         self.controller = controller
         label = tk.Label(self, text="Trading Bot 1.0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
@@ -217,13 +244,19 @@ class PageThree(tk.Frame):
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
         button1 = tk.Button(self, text='Run Simulation', command=run_Simulation)
+        button2 = tk.Button(self, text='Run Simulation2', command=run_Simulation2)
 
         button.pack()
         button1.pack()
+        button2.pack()
 
-        canvas = FigureCanvasTkAgg(fig1, self)
+        #canvas = FigureCanvasTkAgg(fig1, self)
+        #canvas.draw()
+        #canvas.get_tk_widget().pack(side=tk.LEFT, fill=tk.NONE, expand=True)
+        
+        canvas = FigureCanvasTkAgg(fig4, self)
         canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.NONE, expand=True)        
 
         toolbar = NavigationToolbar2Tk(canvas, self)
         toolbar.update()
@@ -251,5 +284,6 @@ if __name__ == "__main__":
     app = SampleApp()
     ani = animation.FuncAnimation(f, animate, interval=1000)
     ani2 = animation.FuncAnimation(fig1, animate2, interval=1000)
+    ani4 = animation.FuncAnimation(fig4, animate4, interval=1000)
     app.mainloop()
 

@@ -42,14 +42,14 @@ def drop_menu(self):
 	public_client = cbpro.PublicClient()
 	#result = public_client.get_product_ticker('BTC-USD')
 	result = public_client.get_product_historic_rates('BTC-USD')
-	print(result)
+	#print(result)
 
-	api_data = open('Coinbase_ApiKey.txt','r').read().splitlines()
-	passphrase = api_data[0]
-	secret_key = api_data[1]
-	api_key = api_data[2]
+	#api_data = open('Coinbase_ApiKey.txt','r').read().splitlines()
+	#passphrase = api_data[0]
+	#secret_key = api_data[1]
+	#api_key = api_data[2]
 
-	auth = CoinbaseWalletAuth(api_key,secret_key)
-	auth_client = cbpro.AuthenticatedClient(api_key,secret_key,passphrase)
+	#auth = CoinbaseWalletAuth(api_key,secret_key)
+	#auth_client = cbpro.AuthenticatedClient(api_key,secret_key,passphrase)
 
 
