@@ -222,7 +222,7 @@ class PageThree(tk.Frame):
             os.system('python Simulation2.py')
             my_wallet, moving_averages, iteration_ma = Simulation2()
             plt.plot(iteration_ma,moving_averages)
-            plt.title('One lines on a graph!')
+            plt.title('Simulation2 Moving Average')
             plt.legend()
             plt.show()
             
@@ -284,6 +284,6 @@ if __name__ == "__main__":
     app = SampleApp()
     ani = animation.FuncAnimation(f, animate, interval=1000)
     ani2 = animation.FuncAnimation(fig1, animate2, interval=1000)
-    ani4 = animation.FuncAnimation(fig4, animate4, interval=1000)
+    #ani4 = animation.FuncAnimation(fig4, animate4, interval=1000)
     app.mainloop()
 
