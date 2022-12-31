@@ -85,16 +85,9 @@ def Simulation2():
     #remove last row in data
     btc_price_2021.pop()
     btc_hist_data_2021 =  btc_date_2021,btc_price_2021 # x- date, y - btc price    
-
-    total_cash = 1000
-    my_wallet = wallet(0,total_cash)
-    print ("Initial Wallet Value:")
-    print(my_wallet.total_cash)
-    print(my_wallet.total_btc)
-    n = len(btc_hist_data_2021[0])
-    
+   
     # Program to calculate moving average
-    window_size = 10
+    window_size = 15
 
     i = 0
     # Initialize an empty list to store moving averages
@@ -128,4 +121,74 @@ def Simulation2():
 	    # Shift window to right by one position
         i += 1
  
-    return my_wallet, moving_averages, iteration_ma
+    i = 0
+    above_or_below = []
+    above_or_below_percent = []
+    while i < len(moving_averages):
+        above_or_below.append(moving_averages[i] > btc_price_2021[i])
+        above_or_below_percent.append(moving_averages[i]/btc_price_2021[i] * 100 - 100)
+        i += 1
+
+    # Simulation of moving average strategy
+    total_cash = 1000
+    my_wallet = wallet(0,total_cash)
+    print ("Initial Wallet Value:")
+    print(my_wallet.total_cash)
+    print(my_wallet.total_btc)
+    n = len(btc_price_2021)
+
+    buy_price = []*n
+    buy_quantity =[]*n
+    sell_price = []*n
+    sell_quantity = []*n
+
+    # total index
+    i = 0
+    # buy index
+    j = 0
+    # sell index
+    k = 0
+    buy_w = 0.7
+    sell_w = 1
+
+    bought = 0
+    buy_percent_below = -2.35/100
+    sell_percent_above = 2.35/100    
+    while i < len(moving_averages):
+
+        if bought == 0:
+            if ((btc_price_2021[i] - btc_price_2021[i]*buy_percent_below) < moving_averages[i]):
+                if (0 != my_wallet.total_cash):
+                    buy_price.append(float(btc_price_2021[i]))
+                    buy_quantity.append(my_wallet.total_cash*buy_w / float(btc_price_2021[i]))
+
+                    if ( buy_quantity[j] > 0 and my_wallet.total_cash > 100 ):
+                        buy_list = open("Buy_List.txt",'a')
+                        writeToList(buy_list,buy_price[j],buy_quantity[j])
+                        my_wallet.total_btc = my_wallet.total_btc + buy_quantity[j]
+                        my_wallet.total_cash = my_wallet.total_cash - buy_quantity[j]*buy_price[j]
+                        bought = 1
+                    j += 1     
+        if bought == 1:
+            if ((btc_price_2021[i]*sell_percent_above + btc_price_2021[i]) > moving_averages[i]):
+                if (0 != my_wallet.total_btc):
+                    sell_price.append(float(btc_price_2021[i]))
+                    sell_quantity.append( my_wallet.total_btc*sell_w )
+                    if (sell_quantity[k] > 0 ):
+                        sell_list = open('Sell_List.txt','a')
+                        writeToList(sell_list,sell_price[k],sell_quantity[k])
+                        my_wallet.total_btc = my_wallet.total_btc - my_wallet.total_btc*sell_w
+                        my_wallet.total_cash = my_wallet.total_cash + sell_quantity[k]*sell_price[k]
+                        bought = 0
+                    k += 1
+
+        wallet_total_list = open("Wallet_List.txt",'a') 
+        last_btc_price = float(btc_price_2021[i])
+        wallet_total = my_wallet.total_cash + my_wallet.total_btc * last_btc_price
+        writeToList(wallet_total_list,i, wallet_total)
+        i += 1
+
+    print(my_wallet.total_cash)
+    print(my_wallet.total_btc)  
+
+    return my_wallet, moving_averages, iteration_ma, above_or_below, above_or_below_percent

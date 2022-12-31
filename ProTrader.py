@@ -13,6 +13,7 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
 import matplotlib.pyplot as plt
+import numpy as np
 
 from ByBit_MarketData import BTCUSD_MarketData
 from Simulation import Simulation
@@ -137,6 +138,10 @@ class StartPage(tk.Frame):
                 os.remove("Sell_x_value_input.txt")
             if (os.path.isfile("Wallet_List.txt")):
                 os.remove("Wallet_List.txt")
+            if (os.path.isfile("BTCUSD_dt.txt")):
+                os.remove("BTCUSD_dt.txt")
+            if (os.path.isfile("BTCUSD_f.txt")):
+                os.remove("BTCUSD_f.txt")     
             self.quit()
 
         tk.Frame.__init__(self, parent)
@@ -220,11 +225,26 @@ class PageThree(tk.Frame):
             
         def run_Simulation2():
             os.system('python Simulation2.py')
-            my_wallet, moving_averages, iteration_ma = Simulation2()
+            my_wallet, moving_averages, iteration_ma, above_or_below, above_or_below_percent = Simulation2()
             plt.plot(iteration_ma,moving_averages)
             plt.title('Simulation2 Moving Average')
             plt.legend()
             plt.show()
+
+            plt.plot(iteration_ma,above_or_below)
+            plt.title('Simulation2 Moving Average A OR B')
+            plt.legend()
+            plt.show()
+
+            plt.plot(iteration_ma,above_or_below_percent)
+            plt.title('Simulation2 Moving Average A OR B %')
+            plt.legend()
+            plt.show()        
+
+            counts, bins = np.histogram(above_or_below_percent)
+            plt.stairs(counts, bins)
+            plt.legend()
+            plt.show()    
             
             
         self.controller = controller
@@ -250,13 +270,13 @@ class PageThree(tk.Frame):
         button1.pack()
         button2.pack()
 
-        #canvas = FigureCanvasTkAgg(fig1, self)
-        #canvas.draw()
-        #canvas.get_tk_widget().pack(side=tk.LEFT, fill=tk.NONE, expand=True)
-        
-        canvas = FigureCanvasTkAgg(fig4, self)
+        canvas = FigureCanvasTkAgg(fig1, self)
         canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.NONE, expand=True)        
+        canvas.get_tk_widget().pack(side=tk.LEFT, fill=tk.NONE, expand=True)
+        
+        #canvas = FigureCanvasTkAgg(fig4, self)
+        #canvas.draw()
+        #canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.NONE, expand=True)        
 
         toolbar = NavigationToolbar2Tk(canvas, self)
         toolbar.update()
@@ -273,12 +293,17 @@ class PageFour(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()        
 
-        canvas = FigureCanvasTkAgg(fig1, self)
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        #canvas = FigureCanvasTkAgg(fig1, self)
+        #canvas.draw()
+        #canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-        drop_menu(self)
-
+        coinId, coin_total = drop_menu(self)
+        
+        label = tk.Label(self, text="Available Balance "+coinId+":", font=controller.title_font)
+        label.pack()        
+        label = tk.Label(self, text=coin_total, font=controller.title_font)
+        label.pack()           
+              
 
 if __name__ == "__main__":
     app = SampleApp()
