@@ -62,10 +62,10 @@ def drop_menu(self):
 		"Select",
 		"Buy",
 		"Sell",
-		"Limit",
 	]
 
 	coinOptions = [
+		"Select",
 		"ETHUSDT",
 		"BTCUSDT",
 	]
@@ -76,7 +76,7 @@ def drop_menu(self):
 
 	# initial menu text
 	clicked.set( "Select" )
-	clicked2.set( "ETHUSDT" )
+	clicked2.set( "Select" )
 
 	# Create Dropdown menu
 	drop = OptionMenu( self , clicked , *options )
