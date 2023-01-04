@@ -22,7 +22,8 @@ class App(customtkinter.CTk):
 
         # configure window
         self.title("Smart Trader 1.0")
-
+        self.geometry(f"{700}x{580}")
+        
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
         # will be raised above the others

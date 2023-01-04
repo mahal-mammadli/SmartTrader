@@ -78,28 +78,41 @@ class PageThree(customtkinter.CTkFrame):
             
             
         self.controller = controller
-        label = customtkinter.CTkLabel(self, text="Trading Bot 1.0")
-        label.pack(side="top", fill="x", pady=10)
-        
-        label = customtkinter.CTkLabel(self, text="Enter sell x value:")
+        label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
+        label.pack(padx=20, pady=(30,2))
+        label = customtkinter.CTkLabel(self, text="Trading Simulator", font=customtkinter.CTkFont(size=18, weight="normal"))
         label.pack()
-        x_entry = customtkinter.CTkEntry(self)
-        x_entry.pack()
-        enter_button = customtkinter.CTkButton(self, text="Enter")
-        enter_button.pack()
+
+        # Simulation Settings
+        SimSettingsFrame = customtkinter.CTkFrame(self)
+        SimSettingsFrame.pack(side='left', fill='x')
+
+        label = customtkinter.CTkLabel(SimSettingsFrame, text="Simulation Settings", font=customtkinter.CTkFont(size=12, weight="normal"))
+        label.pack(padx=5, pady=10)
+                           
+        label = customtkinter.CTkLabel(SimSettingsFrame, text="Enter sell x value:")
+        label.pack(padx=10, pady=10)
+        x_entry = customtkinter.CTkEntry(SimSettingsFrame)
+        x_entry.pack(padx=10, pady=10)
+        enter_button = customtkinter.CTkButton(SimSettingsFrame, text="Enter")
+        enter_button.pack(padx=10, pady=10)
         enter_button.bind("<Button-1>", enter_click)
         enter_button.bind("<Return>", enter_click)
         
+        # Simulation Strategies
+        button1 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation', command=run_Simulation)
+        button2 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation 2', command=run_Simulation2)
+        button1.pack(padx=10, pady=10)
+        button2.pack(padx=10, pady=10)
 
-        button = customtkinter.CTkButton(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button1 = customtkinter.CTkButton(self, text='Run Simulation', command=run_Simulation)
-        button2 = customtkinter.CTkButton(self, text='Run Simulation2', command=run_Simulation2)
+        # Return button
+        button = customtkinter.CTkButton(self, text="Return",
+                           command=lambda: controller.show_frame("PageOne"))
+        # Pack the button in the bottom-right corner of the window
+        button.pack(side='bottom', anchor='se', padx=10, pady=10)
+        
 
-        button.pack()
-        button1.pack()
-        button2.pack()
-
+        # Wallet Graph
         canvas = FigureCanvasTkAgg(WalletFigure.fig1, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=customtkinter.LEFT, fill=customtkinter.NONE, expand=True)   
