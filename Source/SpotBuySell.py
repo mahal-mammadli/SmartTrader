@@ -6,8 +6,17 @@ from customtkinter import *
 from pybit import inverse_perpetual  # <-- import HTTP & WSS for inverse perp
 from pybit import spot
 
+from ConfigKey import ConfigKey
+
+session = spot.HTTP(
+    endpoint='https://api.bybit.com', 
+    api_key=ConfigKey.api_key,
+    api_secret=ConfigKey.api_secret
+)
+print('Logged in.')
+	
 def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
-	session, balance = fetchWalletBalance()
+	balance = fetchWalletBalance()
 	# Dropdown menu options
 	options = [
 		"Select",
@@ -60,22 +69,9 @@ def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
 	return result
 
 def fetchWalletBalance():
-
-    # ByBit Testing1 API
-	api_key = "ZY7E0KBm4gstFsegIp"
-	api_secret = "qqnqEdpt4tX3AFlmuUQBkKUA0M0E7N0Sn78K"
-
-	#client = bybit.bybit(test=False, api_key = api_key, api_secret = api_secret)
-	session = spot.HTTP(
-    	endpoint='https://api.bybit.com', 
-    	api_key=api_key,
-    	api_secret=api_secret
-	)
-	print('Logged in.')
-	
 	# We can fetch our wallet balance using an auth'd session.
 	balance = session.get_wallet_balance()
 	print(balance)
 
-	return session, balance
+	return balance
 

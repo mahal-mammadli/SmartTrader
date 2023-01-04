@@ -25,7 +25,7 @@ class PageFour(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(BalanceFigure, text="Total Balances", font=customtkinter.CTkFont(size=12, weight="bold"))
         label.pack(pady=20)        
 
-        session, balance = fetchWalletBalance()
+        balance = fetchWalletBalance()
         self.coinTotal_labels = []
         for i in range(0,len(balance['result']['balances'])):
             coinId = balance['result']['balances'][i]['coinId']
@@ -84,7 +84,7 @@ class PageFour(customtkinter.CTkFrame):
         self.clicked2.set(option2)
    
     def updateDisplay(self):
-        session, balance = fetchWalletBalance()
+        balance = fetchWalletBalance()
         for i in range(0,len(balance['result']['balances'])):
             coinId = balance['result']['balances'][i]['coinId']
             coin_total = balance['result']['balances'][i]['total'] 
