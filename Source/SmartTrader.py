@@ -9,6 +9,7 @@ from PageOne import PageOne
 from PageTwo import PageTwo, BtcFigure, animate
 from PageThree import PageThree, WalletFigure, animate2
 from PageFour import PageFour
+from PageFive import PageFive
 
 import matplotlib.animation as animation
 
@@ -22,7 +23,7 @@ class App(customtkinter.CTk):
 
         # configure window
         self.title("Smart Trader 1.0")
-        self.geometry(f"{700}x{580}")
+        self.geometry(f"{800}x{700}")
         
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
@@ -33,7 +34,7 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
