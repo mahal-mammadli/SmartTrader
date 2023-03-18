@@ -11,7 +11,7 @@ class StartPage(customtkinter.CTkFrame):
 
         self.logo_label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.pack(padx=20, pady=30)
-        self.sidebar_start_button = customtkinter.CTkButton(self, command=lambda: controller.show_frame("PageOne"), text="Start")
+        self.sidebar_start_button = customtkinter.CTkButton(self, command=lambda: controller.show_frame("LoginPage"), text="Start")
         self.sidebar_start_button.pack(padx=20, pady=(20,10))
 
         self.sidebar_exit_button = customtkinter.CTkButton(self, command=self.exit, text="Exit")

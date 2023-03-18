@@ -2,6 +2,7 @@ import requests
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import customtkinter
+from tkcalendar import DateEntry
 
 from PageOne import PageOne
 
@@ -29,11 +30,15 @@ class PageFive(customtkinter.CTkFrame):
             api_url = 'https://api.coindesk.com/v1/bpi/historical/close.json'
 
             # Get the start and end dates from the user input fields
-            start_date = start_date_entry.get()
-            end_date = end_date_entry.get()
-    
+            start_date = start_date_entry.get_date()
+            end_date = end_date_entry.get_date()
+        
+            # Convert the date objects to string format
+            start_date_str = start_date.strftime('%Y-%m-%d')
+            end_date_str = end_date.strftime('%Y-%m-%d')
+
             # Set the parameters for the API request
-            params = {'start': start_date, 'end': end_date}
+            params = {'start': start_date_str, 'end': end_date_str}
 
             # Make the GET request to the API
             response = requests.get(api_url, params=params)
@@ -72,15 +77,17 @@ class PageFive(customtkinter.CTkFrame):
         SideFrame.pack(side='left', fill='x', expand=True)
 
         # Create the start date input field
-        start_date_label = customtkinter.CTkLabel(SideFrame, text='Start Date (yyyy-mm-dd):')
+        start_date_label = customtkinter.CTkLabel(SideFrame, text='Start Date:')
         start_date_label.pack(padx=10, pady=10, expand=True)
-        start_date_entry = customtkinter.CTkEntry(SideFrame)
+        start_date_entry = DateEntry(SideFrame, width=12, background='darkblue',
+                             foreground='white', borderwidth=2)
         start_date_entry.pack(padx=10, pady=10, expand=True)
 
         # Create the end date input field
-        end_date_label = customtkinter.CTkLabel(SideFrame, text='End Date (yyyy-mm-dd):')
+        end_date_label = customtkinter.CTkLabel(SideFrame, text='End Date:')
         end_date_label.pack(padx=10, pady=10, expand=True)
-        end_date_entry = customtkinter.CTkEntry(SideFrame)
+        end_date_entry = DateEntry(SideFrame, width=12, background='darkblue',
+                           foreground='white', borderwidth=2)
         end_date_entry.pack(padx=10, pady=10, expand=True)
 
         # Create a button to plot the data

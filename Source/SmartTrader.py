@@ -3,13 +3,15 @@ import tkinter.messagebox
 import customtkinter
 import os
 
-# 
+#
 from StartPage import StartPage
+from LoginPage import LoginPage
 from PageOne import PageOne
 from PageTwo import PageTwo, BtcFigure, animate
 from PageThree import PageThree, WalletFigure, animate2
 from PageFour import PageFour
 from PageFive import PageFive
+from ChatGPT import ChatGPT
 
 import matplotlib.animation as animation
 
@@ -34,7 +36,7 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive):
+        for F in (StartPage, LoginPage, PageOne, PageTwo, PageThree, PageFour, PageFive, ChatGPT):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame

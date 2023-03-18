@@ -10,16 +10,19 @@ class PageOne(customtkinter.CTkFrame):
         label.pack(padx=20, pady=30)
         button1 = customtkinter.CTkButton(self, text="BTC USD Live Chart",
                            command=lambda: controller.show_frame("PageTwo"))
-        button4 = customtkinter.CTkButton(self,text="View BTC-USD Historical Data",
+        button2 = customtkinter.CTkButton(self,text="View BTC-USD Historical Data",
                            command=lambda: controller.show_frame("PageFive"))                           
-        button2 = customtkinter.CTkButton(self, text="Trading Simulator",
+        button3 = customtkinter.CTkButton(self, text="Trading Simulator",
                            command=lambda: controller.show_frame("PageThree")) 
-        button3 = customtkinter.CTkButton(self,text="Spot Buy and Sell",
-                           command=lambda: controller.show_frame("PageFour"))                                               
+        button4 = customtkinter.CTkButton(self,text="Spot Buy and Sell",
+                           command=lambda: controller.show_frame("PageFour"))
+        button5 = customtkinter.CTkButton(self,text="ChatGPT",
+                           command=lambda: controller.show_frame("ChatGPT"))                                         
         button1.pack(pady=10)
-        button4.pack(pady=10)
         button2.pack(pady=10)
         button3.pack(pady=10)
+        button4.pack(pady=10)
+        button5.pack(pady=10)
 
         button = customtkinter.CTkButton(self, text="Return",
             command=lambda: controller.show_frame("StartPage"))
