@@ -12,6 +12,7 @@ from PageThree import PageThree, WalletFigure, animate2
 from PageFour import PageFour
 from PageFive import PageFive
 from ChatGPT import ChatGPT
+from TradingView import TradingView
 
 import matplotlib.animation as animation
 
@@ -36,7 +37,8 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, LoginPage, PageOne, PageTwo, PageThree, PageFour, PageFive, ChatGPT):
+        for F in (StartPage, LoginPage, PageOne, PageTwo, PageThree, PageFour, PageFive, ChatGPT,
+                  TradingView):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
