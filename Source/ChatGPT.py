@@ -22,23 +22,19 @@ class ChatGPT(customtkinter.CTkFrame):
 
         # Create a label for the chat history
         self.chat_history_label = customtkinter.CTkLabel(SideFrame, text='Chat History')
-        self.chat_history_label.pack(padx=10, pady=10, expand=True)
+        self.chat_history_label.pack(side='top', padx=10, pady=10, fill='x')
 
         # Create a text widget to display the chat history
         self.chat_history_text = customtkinter.CTkTextbox(SideFrame, state='disabled')
-        self.chat_history_text.pack(padx=10, pady=10, expand=True)
-
-        # Create a label for the input prompt
-        self.prompt_label = customtkinter.CTkLabel(self, text='Input:')
-        self.prompt_label.pack(padx=5, pady=10, expand=True)
-
-        # Create an entry widget for the user input
-        self.user_input_entry = customtkinter.CTkEntry(self)
-        self.user_input_entry.pack(padx=10, pady=10, expand=True)
+        self.chat_history_text.pack(side='top', padx=10, pady=10, fill='both', expand=True)
 
         # Create a button to submit the user input
-        self.submit_button = customtkinter.CTkButton(self, text='Submit', command=self.generate_response)
-        self.submit_button.pack(padx=5, pady=10, expand=True)
+        self.submit_button = customtkinter.CTkButton(SideFrame, text='Submit', command=self.generate_response)
+        self.submit_button.pack(side='right', padx=5, pady=10)
+
+        # Create an entry widget for the user input
+        self.user_input_entry = customtkinter.CTkEntry(SideFrame)
+        self.user_input_entry.pack(side='bottom', padx=10, pady=10, fill='both', expand=True)
 
         # Define the default prompt for generating text
         self.prompt = ''
