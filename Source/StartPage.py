@@ -1,13 +1,33 @@
 import os
+import sys
 import customtkinter
 
 from PageOne import PageOne
+
+
+class StdoutRedirector:
+    def __init__(self, text_widget):
+        self.text_widget = text_widget
+
+    def write(self, str):
+        self.text_widget.configure(state="normal")
+        self.text_widget.insert("end", str)
+        self.text_widget.configure(state="disabled")
+        self.text_widget.see("end")
+
 
 class StartPage(customtkinter.CTkFrame):
 
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
-        self.controller = controller          
+        self.controller = controller
+
+        # create console text widget
+        self.console_text = customtkinter.CTkTextbox(self, height=10, width=80, state="disabled")
+        self.console_text.pack(pady=50, side="bottom", fill="both", expand=True)  # stretch to the sides of the window
+
+        # redirect console output to text widget
+        sys.stdout = StdoutRedirector(self.console_text)                
 
         self.logo_label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.pack(padx=20, pady=30)
