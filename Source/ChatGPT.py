@@ -41,7 +41,7 @@ class ChatGPT(customtkinter.CTkFrame):
         self.submit_button.pack(padx=5, pady=10, expand=True)
 
         # Define the default prompt for generating text
-        self.prompt = 'Hello, how are you?'
+        self.prompt = ''
 
         # Set the model and parameters for generating text
         self.model_engine = "text-davinci-002"
