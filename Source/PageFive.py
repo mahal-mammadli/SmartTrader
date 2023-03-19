@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import customtkinter
 from tkcalendar import DateEntry
+from datetime import datetime
 
 from PageOne import PageOne
 
@@ -29,14 +30,20 @@ class PageFive(customtkinter.CTkFrame):
             # Set the API endpoint URL
             api_url = 'https://api.coindesk.com/v1/bpi/historical/close.json'
 
-            # Get the start and end dates from the user input fields
-            start_date = start_date_entry.get_date()
-            end_date = end_date_entry.get_date()
+            # Check the state of the "entire history" checkbox
+            if entire_history_var.get():
+                # If the checkbox is checked, set the start date to the earliest available date
+                start_date_str = '2010-07-17'
+                current_datetime = datetime.now()
+                end_date_str = current_datetime.strftime('%Y-%m-%d')
+            else:
+                # If the checkbox is unchecked, get the start and end dates from the user input fields
+                start_date = start_date_entry.get_date()
+                end_date = end_date_entry.get_date()
+                # Convert the date objects to string format
+                start_date_str = start_date.strftime('%Y-%m-%d')
+                end_date_str = end_date.strftime('%Y-%m-%d')
         
-            # Convert the date objects to string format
-            start_date_str = start_date.strftime('%Y-%m-%d')
-            end_date_str = end_date.strftime('%Y-%m-%d')
-
             # Set the parameters for the API request
             params = {'start': start_date_str, 'end': end_date_str}
 
@@ -75,6 +82,11 @@ class PageFive(customtkinter.CTkFrame):
         # Create the side frame
         SideFrame = customtkinter.CTkFrame(self)
         SideFrame.pack(side='left', fill='x', expand=True)
+
+        # Create a checkbox to toggle the "entire history" option on and off
+        entire_history_var = customtkinter.BooleanVar()
+        entire_history_checkbutton = customtkinter.CTkCheckBox(SideFrame, text="Entire History", variable=entire_history_var)
+        entire_history_checkbutton.pack(padx=10, pady=10, expand=True)        
 
         # Create the start date input field
         start_date_label = customtkinter.CTkLabel(SideFrame, text='Start Date:')
