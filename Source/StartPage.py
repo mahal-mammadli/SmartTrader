@@ -55,20 +55,17 @@ class StartPage(customtkinter.CTkFrame):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
 
-    def sidebar_button_event(self):
-        print("sidebar_button click")
-
     def exit(self):
-        if (os.path.isfile("Buy_List.txt")):
-            os.remove("Buy_List.txt")    
-        if (os.path.isfile("Sell_List.txt")):
-            os.remove("Sell_List.txt")
-        if (os.path.isfile("Sell_x_value_input.txt")):
-            os.remove("Sell_x_value_input.txt")
-        if (os.path.isfile("Wallet_List.txt")):
-            os.remove("Wallet_List.txt")
-        if (os.path.isfile("BTCUSD_dt.txt")):
-            os.remove("BTCUSD_dt.txt")
-        if (os.path.isfile("BTCUSD_f.txt")):
-            os.remove("BTCUSD_f.txt")
+        # remove files if they exist
+        for file_name in [
+            "Buy_List.txt",
+            "Sell_List.txt",
+            "Sell_x_value_input.txt",
+            "Wallet_List.txt",
+            "BTCUSD_dt.txt",
+            "BTCUSD_f.txt",
+        ]:
+            if os.path.isfile(file_name):
+                os.remove(file_name)
+
         self.quit()
