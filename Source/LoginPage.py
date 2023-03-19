@@ -5,6 +5,11 @@ class LoginPage(customtkinter.CTkFrame):
         customtkinter.CTkFrame.__init__(self, parent)
         self.controller = controller
 
+        button = customtkinter.CTkButton(self, text="Return",
+                           command=lambda: controller.show_frame("StartPage"))
+        # Pack the button in the bottom-right corner of the window
+        button.pack(side='bottom', anchor='se', padx=10, pady=10)         
+
         # Add widgets
         label = customtkinter.CTkLabel(self, text="Login", font=("TkDefaultFont", 16))
         label.pack(pady=10)
