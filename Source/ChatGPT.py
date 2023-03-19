@@ -40,7 +40,7 @@ class ChatGPT(customtkinter.CTkFrame):
         self.prompt = ''
 
         # Set the model and parameters for generating text
-        self.model_engine = "text-davinci-002"
+        self.model_engine = "text-davinci-003"
         self.params = {
             "prompt": self.prompt,
             "temperature": 0.5,
