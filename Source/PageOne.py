@@ -17,12 +17,15 @@ class PageOne(customtkinter.CTkFrame):
         button4 = customtkinter.CTkButton(self,text="Spot Buy and Sell",
                            command=lambda: controller.show_frame("PageFour"))
         button5 = customtkinter.CTkButton(self,text="ChatGPT",
-                           command=lambda: controller.show_frame("ChatGPT"))                                         
+                           command=lambda: controller.show_frame("ChatGPT"))
+        button6 = customtkinter.CTkButton(self,text="TradingView",
+                           command=lambda: controller.show_frame("TradingView"))                                           
         button1.pack(pady=10)
         button2.pack(pady=10)
         button3.pack(pady=10)
         button4.pack(pady=10)
         button5.pack(pady=10)
+        button6.pack(pady=10)
 
         button = customtkinter.CTkButton(self, text="Return",
             command=lambda: controller.show_frame("StartPage"))
