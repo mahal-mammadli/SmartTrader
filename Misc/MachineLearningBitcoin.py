@@ -102,7 +102,7 @@ plt.legend()
 plt.show()
 
 # Define the number of days to predict
-num_days = 365
+num_days = 10
 
 # Create an array to hold the predicted prices
 predicted_prices = np.zeros((num_days, 1))
