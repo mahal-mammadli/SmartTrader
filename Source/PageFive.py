@@ -5,8 +5,6 @@ import customtkinter
 from tkcalendar import DateEntry
 from datetime import datetime
 
-from PageOne import PageOne
-
 # Create a figure and a subplot
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -21,7 +19,7 @@ class PageFive(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="BTC-USD Historical Data", font=customtkinter.CTkFont(size=16, weight="bold"))
         label.pack(padx=5, pady=5)        
         button = customtkinter.CTkButton(self, text="Return",
-                command=lambda: controller.show_frame("PageOne"))
+                command=lambda: controller.show_frame("ResearchPage"))
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10)         
 

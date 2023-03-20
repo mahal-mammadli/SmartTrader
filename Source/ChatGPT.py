@@ -9,7 +9,7 @@ class ChatGPT(customtkinter.CTkFrame):
 
         # Return button
         button = customtkinter.CTkButton(self, text="Return",
-                    command=lambda: controller.show_frame("PageOne"))
+                    command=lambda: controller.show_frame("ResearchPage"))
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10) 
 

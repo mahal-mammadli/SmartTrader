@@ -32,7 +32,7 @@ class PageTwo(customtkinter.CTkFrame):
         self.controller = controller
         label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
         label.pack(padx=20, pady=30)
-        button = customtkinter.CTkButton(self, text="Return", command=lambda: controller.show_frame("PageOne"))
+        button = customtkinter.CTkButton(self, text="Return", command=lambda: controller.show_frame("ResearchPage"))
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10) 
 

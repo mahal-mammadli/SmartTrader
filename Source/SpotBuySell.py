@@ -13,7 +13,8 @@ session = spot.HTTP(
     api_key=ConfigKey.api_key,
     api_secret=ConfigKey.api_secret
 )
-print('Logged in.')
+if session:
+	print('Logged in to ByBit API.')
 	
 def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
 	balance = fetchWalletBalance()
@@ -71,7 +72,7 @@ def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
 def fetchWalletBalance():
 	# We can fetch our wallet balance using an auth'd session.
 	balance = session.get_wallet_balance()
-	print(balance)
+	#print(balance)
 
 	return balance
 

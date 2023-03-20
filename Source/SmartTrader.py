@@ -5,8 +5,8 @@ import os
 
 #
 from StartPage import StartPage
-from LoginPage import LoginPage
-from PageOne import PageOne
+from MenuPage import MenuPage
+from ResearchPage import ResearchPage
 from PageTwo import PageTwo, BtcFigure, animate
 from PageThree import PageThree, WalletFigure, animate2
 from PageFour import PageFour
@@ -14,10 +14,11 @@ from PageFive import PageFive
 from ChatGPT import ChatGPT
 from TradingView import TradingView
 
+
 import matplotlib.animation as animation
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
 class App(customtkinter.CTk):
@@ -37,7 +38,7 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, LoginPage, PageOne, PageTwo, PageThree, PageFour, PageFive, ChatGPT,
+        for F in (StartPage, MenuPage, ResearchPage, PageTwo, PageThree, PageFour, PageFive, ChatGPT,
                   TradingView):
             page_name = F.__name__
             frame = F(parent=container, controller=self)

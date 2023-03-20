@@ -13,7 +13,7 @@ class PageFour(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
         label.pack(padx=20, pady=30)
         button = customtkinter.CTkButton(self, text="Return",
-                           command=lambda: controller.show_frame("PageOne"))
+                           command=lambda: controller.show_frame("MenuPage"))
         
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10)
