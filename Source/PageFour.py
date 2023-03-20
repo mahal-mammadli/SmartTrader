@@ -11,12 +11,26 @@ class PageFour(customtkinter.CTkFrame):
         customtkinter.CTkFrame.__init__(self, parent)
         self.controller = controller
         label = customtkinter.CTkLabel(self, text="Smart Trader", font=customtkinter.CTkFont(size=20, weight="bold"))
-        label.pack(padx=20, pady=30)
+        label.pack(padx=20, pady=(30,2))
+        label = customtkinter.CTkLabel(self, text="Trading Bot", font=customtkinter.CTkFont(size=18, weight="normal"))
+        label.pack()
+
         button = customtkinter.CTkButton(self, text="Return",
                            command=lambda: controller.show_frame("MenuPage"))
         
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10)
+
+        # Tool Menu Options
+        button1 = customtkinter.CTkButton(self, text="Research",
+                           command=lambda: controller.show_frame("ResearchPage"))                         
+        button2 = customtkinter.CTkButton(self, text="Trading Simulator",
+                           command=lambda: controller.show_frame("PageThree")) 
+        button3 = customtkinter.CTkButton(self,text="Trading Bot",
+                           command=lambda: controller.show_frame("PageFour"), bg_color='blue', fg_color='blue')                                    
+        button1.pack(anchor='nw', pady=10)
+        button2.pack(anchor='nw', pady=10)
+        button3.pack(anchor='nw', pady=10)    
 
         # Available Balance Figure
         BalanceFigure = customtkinter.CTkFrame(self)

@@ -14,9 +14,9 @@ class MenuPage(customtkinter.CTkFrame):
                            command=lambda: controller.show_frame("PageThree")) 
         button3 = customtkinter.CTkButton(self,text="Trading Bot",
                            command=lambda: controller.show_frame("PageFour"))                                    
-        button1.pack(pady=10)
-        button2.pack(pady=10)
-        button3.pack(pady=10)
+        button1.pack(anchor='nw', pady=10)
+        button2.pack(anchor='nw', pady=10)
+        button3.pack(anchor='nw', pady=10)
 
         button = customtkinter.CTkButton(self, text="Return",
             command=lambda: controller.show_frame("StartPage"))

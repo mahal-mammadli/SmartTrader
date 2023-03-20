@@ -83,6 +83,17 @@ class PageThree(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="Trading Simulator", font=customtkinter.CTkFont(size=18, weight="normal"))
         label.pack()
 
+        # Tool Menu Options
+        button1 = customtkinter.CTkButton(self, text="Research",
+                           command=lambda: controller.show_frame("ResearchPage"))                         
+        button2 = customtkinter.CTkButton(self, text="Trading Simulator",
+                           command=lambda: controller.show_frame("PageThree"), bg_color='blue', fg_color='blue') 
+        button3 = customtkinter.CTkButton(self,text="Trading Bot",
+                           command=lambda: controller.show_frame("PageFour"))                                    
+        button1.pack(anchor='nw', pady=10)
+        button2.pack(anchor='nw', pady=10)
+        button3.pack(anchor='nw', pady=10)   
+
         # Simulation Settings
         SimSettingsFrame = customtkinter.CTkFrame(self)
         SimSettingsFrame.pack(side='left', fill='x')
