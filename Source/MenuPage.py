@@ -18,7 +18,7 @@ class MenuPage(customtkinter.CTkFrame):
         button2.pack(anchor='nw', pady=10)
         button3.pack(anchor='nw', pady=10)
 
-        button = customtkinter.CTkButton(self, text="Return",
+        button = customtkinter.CTkButton(self, text="Log out",
             command=lambda: controller.show_frame("StartPage"))
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10)

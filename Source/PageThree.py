@@ -111,16 +111,16 @@ class PageThree(customtkinter.CTkFrame):
         enter_button.bind("<Return>", enter_click)
         
         # Simulation Strategies
-        button1 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation', command=run_Simulation)
-        button2 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation 2', command=run_Simulation2)
-        button1.pack(padx=10, pady=10)
-        button2.pack(padx=10, pady=10)
+        button4 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation', command=run_Simulation)
+        button5 = customtkinter.CTkButton(SimSettingsFrame, text='Run Simulation 2', command=run_Simulation2)
+        button4.pack(padx=10, pady=10)
+        button5.pack(padx=10, pady=10)                        
 
         # Return button
-        button = customtkinter.CTkButton(self, text="Return",
-                           command=lambda: controller.show_frame("MenuPage"))
+        button7 = customtkinter.CTkButton(self, text="Log out",
+                           command=lambda: controller.show_frame("StartPage"))
         # Pack the button in the bottom-right corner of the window
-        button.pack(side='bottom', anchor='se', padx=10, pady=10)
+        button7.pack(side='bottom', anchor='se', padx=10, pady=10)
         
 
         # Wallet Graph

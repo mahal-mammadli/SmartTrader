@@ -15,8 +15,8 @@ class PageFour(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="Trading Bot", font=customtkinter.CTkFont(size=18, weight="normal"))
         label.pack()
 
-        button = customtkinter.CTkButton(self, text="Return",
-                           command=lambda: controller.show_frame("MenuPage"))
+        button = customtkinter.CTkButton(self, text="Log out",
+                           command=lambda: controller.show_frame("StartPage"))
         
         # Pack the button in the bottom-right corner of the window
         button.pack(side='bottom', anchor='se', padx=10, pady=10)
