@@ -8,14 +8,19 @@ from pybit import spot
 
 from ConfigKey import ConfigKey
 
+import requests
+
+response = requests.get("https://ipinfo.io/json")
+print(response.json())
+
 session = spot.HTTP(
     endpoint='https://api.bybit.com', 
     api_key=ConfigKey.api_key,
     api_secret=ConfigKey.api_secret
 )
 if session:
-	print('Logged in to ByBit API.')
-	
+	print('Logged in to ByBit API.')	
+
 def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
 	balance = fetchWalletBalance()
 	# Dropdown menu options
@@ -71,7 +76,8 @@ def spot_buy_sell_transaction(clicked, clicked2, qty_entry, qty_entry2):
 
 def fetchWalletBalance():
 	# We can fetch our wallet balance using an auth'd session.
-	balance = session.get_wallet_balance()
+	#balance = session.get_wallet_balance()
+	balance = 0
 	#print(balance)
 
 	return balance

@@ -41,12 +41,13 @@ class PageFour(customtkinter.CTkFrame):
 
         balance = fetchWalletBalance()
         self.coinTotal_labels = []
-        for i in range(0,len(balance['result']['balances'])):
-            coinId = balance['result']['balances'][i]['coinId']
-            coin_total = balance['result']['balances'][i]['total'] 
-            label = customtkinter.CTkLabel(BalanceFigure, text=coinId+" : "+coin_total)
-            label.pack()
-            self.coinTotal_labels.append(label)
+        if (0 != balance):
+            for i in range(0,len(balance['result']['balances'])):
+                coinId = balance['result']['balances'][i]['coinId']
+                coin_total = balance['result']['balances'][i]['total'] 
+                label = customtkinter.CTkLabel(BalanceFigure, text=coinId+" : "+coin_total)
+                label.pack()
+                self.coinTotal_labels.append(label)
 
         self.updateDisplay()
 
@@ -99,8 +100,9 @@ class PageFour(customtkinter.CTkFrame):
    
     def updateDisplay(self):
         balance = fetchWalletBalance()
-        for i in range(0,len(balance['result']['balances'])):
-            coinId = balance['result']['balances'][i]['coinId']
-            coin_total = balance['result']['balances'][i]['total'] 
-            self.coinTotal_labels[i].configure(text=coinId+" : "+coin_total)
-        self.after(10000, self.updateDisplay)
+        if (0 != balance):
+            for i in range(0,len(balance['result']['balances'])):
+                coinId = balance['result']['balances'][i]['coinId']
+                coin_total = balance['result']['balances'][i]['total'] 
+                self.coinTotal_labels[i].configure(text=coinId+" : "+coin_total)
+                self.after(10000, self.updateDisplay)
