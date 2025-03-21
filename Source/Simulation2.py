@@ -7,7 +7,7 @@ import csv
 from tkinter.constants import END, TRUE, Y
 import matplotlib
 from matplotlib import pyplot as plt
-from pybit import HTTP
+from pybit.unified_trading import HTTP
 from tkinter import *
 import pandas as pd
 

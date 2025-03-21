@@ -3,8 +3,7 @@ import bybit
 import time
 import matplotlib
 from customtkinter import *
-from pybit import inverse_perpetual  # <-- import HTTP & WSS for inverse perp
-from pybit import spot
+from pybit.unified_trading import HTTP
 
 from ConfigKey import ConfigKey
 
@@ -13,8 +12,7 @@ import requests
 response = requests.get("https://ipinfo.io/json")
 print(response.json())
 
-session = spot.HTTP(
-    endpoint='https://api.bybit.com', 
+session = HTTP(
     api_key=ConfigKey.api_key,
     api_secret=ConfigKey.api_secret
 )

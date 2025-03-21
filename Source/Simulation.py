@@ -6,7 +6,7 @@ import csv
 from tkinter.constants import END, TRUE, Y
 import matplotlib
 from matplotlib import pyplot as plt
-from pybit import HTTP
+from pybit.unified_trading import HTTP
 from tkinter import *
 
 # Open CSV file of BTC price history and convert to txt file
